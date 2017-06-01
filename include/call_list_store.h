@@ -76,7 +76,7 @@ protected:
 
 
 /// Operation that gets call fragments for a particular IMPU.
-class GetCallFragments : public CassandraStore::Operation
+class GetCallFragments : public CassandraStore::HAOperation
 {
 public:
   /// Constructor.
