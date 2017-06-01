@@ -218,7 +218,7 @@ Store::new_write_call_fragment_op(const std::string& impu,
 //
 
 GetCallFragments::GetCallFragments(const std::string& impu) :
-  CassandraStore::Operation(), _impu(impu), _fragments()
+  CassandraStore::HAOperation(), _impu(impu), _fragments()
 {}
 
 GetCallFragments::~GetCallFragments()
@@ -238,11 +238,12 @@ bool GetCallFragments::perform(CassandraStore::Client* client,
 
   // Get all the call columns for the IMPU's cassandra row.
   std::vector<cass::ColumnOrSuperColumn> columns;
-  client->ha_get_columns_with_prefix(COLUMN_FAMILY,
-                                     _impu,
-                                     CALL_COLUMN_PREFIX,
-                                     columns,
-                                     trail);
+  ha_get_columns_with_prefix(client,
+                             COLUMN_FAMILY,
+                             _impu,
+                             CALL_COLUMN_PREFIX,
+                             columns,
+                             trail);
 
   for(std::vector<cass::ColumnOrSuperColumn>::const_iterator column_it = columns.begin();
       column_it != columns.end();
