@@ -267,16 +267,19 @@ bool GetCallFragments::perform(CassandraStore::Client* client,
     std::string& id_str = tokens[1];
     std::string& type_str = tokens[2];
     CallFragment::Type type;
-    fragment_type_from_string(type_str, type);
+    bool rc = fragment_type_from_string(type_str, type);
 
-    // Now form a call fragment and add it to the output of the operation.
-    CallFragment fragment;
-    fragment.timestamp = timestamp_str;
-    fragment.id = id_str;
-    fragment.type = type;
-    fragment.contents = column_it->column.value;
+    if (rc)
+    {
+      // Now form a call fragment and add it to the output of the operation.
+      CallFragment fragment;
+      fragment.timestamp = timestamp_str;
+      fragment.id = id_str;
+      fragment.type = type;
+      fragment.contents = column_it->column.value;
 
-    _fragments.push_back(fragment);
+      _fragments.push_back(fragment);
+    }
   }
 
   TRC_DEBUG("Retrieved %d call fragments from the store", _fragments.size());
