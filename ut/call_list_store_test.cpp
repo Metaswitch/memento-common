@@ -12,10 +12,6 @@
 #ifndef CALL_LIST_STORE_TEST_CPP_
 #define CALL_LIST_STORE_TEST_CPP_
 
-//=======================
-// TJW2 TODO: Make common
-//=======================
-
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
